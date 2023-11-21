@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {adminlogin} from '../actions/userAction'
 import FormContainer from '../Components/FormContainer'
 import styled from 'styled-components';
+import axios from 'axios'
 
 
 const AdminLoginScreen = () => {
@@ -26,9 +27,15 @@ const AdminLoginScreen = () => {
         }
     }, [userInfo])
     
-    const submitHandler = (e) => {
+    const submitHandler = async(e) => {
+        console.log("object")
         e.preventDefault()
-        dispatch(adminlogin(email,password))
+         await axios.post(
+            `/customadmin/adminlogin/`,
+            { 'username': email, 'password': password }
+        )
+        navigate("/adminhome/")
+        // dispatch(adminlogin(email,password))
     }
     
 
@@ -63,11 +70,11 @@ const AdminLoginScreen = () => {
                 </Form.Group>
                
 
-                {/* <Button type='submit' variant='primary'  style={{ padding: '10px 20px', marginTop: '10px' }} > */}
+                <Button type='submit' variant='primary'  style={{ padding: '10px 20px', marginTop: '10px' }} >
                     
                      
-                    <Link to="/adminhome/">Sign In</Link>
-                {/* </Button> */}
+                    Login
+                </Button>
             </Form>
 
     </FormContainer>
